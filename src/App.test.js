@@ -1,8 +1,14 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('adds a new task to the list', () => {
+    render(<App />);
+    const inputElement = screen.getByPlaceholderText(/add a new task/i);
+    const buttonElement = screen.getByText(/add task/i);
+
+    fireEvent.change(inputElement, { target: { value: 'New Test Task' } });
+    fireEvent.click(buttonElement);
+
+    const taskElement = screen.getByText(/new test task/i);
+    expect(taskElement).toBeInTheDocument();
 });
